@@ -16,11 +16,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span> 
         </button>
-        <a class="navbar-brand" href="#">Projektarbeit</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-
+                <li><?php self::actionLink('Overview', "Index", "Post"); ?></li>
+                <li><?php self::actionLink('Search', "Search", "Post"); ?></li>
             </ul>
         </div>
     </div>
