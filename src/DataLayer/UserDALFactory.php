@@ -1,12 +1,14 @@
 <?php
 
+namespace DataLayer;
+
 class UserDALFactory {
 
     private function __construct() {
         
     }
 
-    public static function getInstance() {
+    public static function getDAL() {
         
     }
 

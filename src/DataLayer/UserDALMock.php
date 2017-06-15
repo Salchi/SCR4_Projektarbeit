@@ -1,10 +1,13 @@
 <?php
 
+namespace DataLayer;
+
 use Domain;
 
 class UserDALMock implements UserDAL {
+
     private $users = array();
-    
+
     public function __construct() {
         foreach (array('user', 'salchi') as $username) {
             $this->users[$username] = new User($username);
