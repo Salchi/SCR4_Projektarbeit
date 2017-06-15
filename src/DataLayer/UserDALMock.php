@@ -2,7 +2,7 @@
 
 namespace DataLayer;
 
-use Domain;
+use Domain\User;
 
 class UserDALMock implements UserDAL {
 
@@ -16,6 +16,10 @@ class UserDALMock implements UserDAL {
 
     public function get($username) {
         return array_key_exists($username, $this->users) ? $this->users[$username] : null;
+    }
+
+    public function isPasswordValid($username, $password) {
+        return array_key_exists($username, $this->users) && $username === $password;
     }
 
 }

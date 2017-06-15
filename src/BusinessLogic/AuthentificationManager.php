@@ -2,7 +2,7 @@
 
 namespace BusinessLogic;
 
-use \DataLayer\DataLayerFactory;
+use DataLayer\UserDALFactory;
 
 final class AuthentificationManager {
 
@@ -15,10 +15,8 @@ final class AuthentificationManager {
     public static function authenticate($username, $password) {
         self::signOut();
 
-        $user = DataLayerFactory::getDataLayer()->getUserForUserNameAndPassword($username, $password);
-
-        if ($user != null) {
-            SessionManager::storeValue(self::SESSION_USER_ID, $user->getId());
+        if (UserDALFactory::getDAL()->isPasswordValid($username, $password)) {
+            SessionManager::storeValue(self::SESSION_USER_ID, UserDALFactory::getDAL()->get($username)->getUsername());
             return true;
         }
 
@@ -34,7 +32,7 @@ final class AuthentificationManager {
     }
 
     public static function getAuthenticatedUser() {
-        return self::isAuthenticated() ? DataLayerFactory::getDataLayer()->getUser(SessionManager::getValue(self::SESSION_USER_ID)) : null;
+        return self::isAuthenticated() ? UserDALFactory::getDAL()->get(SessionManager::getValue(self::SESSION_USER_ID)) : null;
     }
 
 }

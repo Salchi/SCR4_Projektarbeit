@@ -9,7 +9,7 @@ class UserDALFactory {
     }
 
     public static function getDAL() {
-        
+        return new UserDALMock();
     }
 
 }

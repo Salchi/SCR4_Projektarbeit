@@ -6,7 +6,7 @@
     <?php self::beginActionForm('Login', 'User', 'post'); ?>
         <div class="form-group">
             <label for="username">Username</label>
-            <input class="form-control" id="username" name="un" value="">
+            <input class="form-control" id="username" name="un" value="<?php self::htmlOut($model['username']); ?>">
         </div>
         <div class="form-group">
             <label for="password">Password</label>
