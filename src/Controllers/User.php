@@ -3,13 +3,22 @@
 namespace Controllers;
 
 class User extends \MVC\Controller {
-    function GET_Login()
-    {
+
+    const PARAM_USERNAME = 'un';
+    const PARAM_PASSWORD = 'pwd';
+    
+    function GET_Login() {
         return $this->renderView('login', array());
     }
-    
-    function GET_Register()
-    {
+
+    function POST_Login() {
+        $a = $this->getParam(self::PARAM_USERNAME);
+        $a .= '<br>' . $this->getParam(self::PARAM_PASSWORD);
+        echo $a;
+    }
+
+    function GET_Register() {
         return $this->renderView('register', array());
     }
+
 }

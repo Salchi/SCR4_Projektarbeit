@@ -1,22 +1,22 @@
 <?php
+
 namespace MVC;
 
-final class ViewRenderer
-{
-    private function __construct() {}
+final class ViewRenderer {
 
-    public static function renderView($view, $model)
-    {
+    private function __construct() {
+        
+    }
+
+    public static function renderView($view, $model) {
         require(MVC::getViewPath() . "/$view.inc");
     }
 
-    private static function htmlOut($string)
-    {
+    private static function htmlOut($string) {
         echo(htmlentities($string));
     }
 
-    private static function actionLink($content, $action, $controller, $params = null, $cssClass = null)
-    {
+    private static function actionLink($content, $action, $controller, $params = null, $cssClass = null) {
         $cc = $cssClass != null ? " class=\"$cssClass\"" : "";
         $url = MVC::buildActionLink($action, $controller, $params);
         $link = <<<LINK
@@ -27,10 +27,7 @@ LINK;
         echo('</a>');
     }
 
-    
-
-    private static function beginActionForm($action, $controller, $params = null, $method = 'get', $cssClass = null)
-    {
+    private static function beginActionForm($action, $controller, $method = 'get', $params = null, $cssClass = null) {
         $cc = $cssClass != null ? " class=\"$cssClass\"" : "";
         $form = <<<FORM
 <form method="$method" action="?"$cc>
@@ -40,8 +37,7 @@ FORM;
 
         echo($form);
 
-        if(is_array($params))
-        {
+        if (is_array($params)) {
             foreach ($params as $name => $value) {
                 $form = <<<FORM
 <input type="hidden" name="$name" value="$value">
@@ -51,8 +47,8 @@ FORM;
         }
     }
 
-    private static function endActionForm()
-    {
+    private static function endActionForm() {
         echo('</form>');
     }
+
 }
