@@ -21,5 +21,9 @@ class UserDALMock implements UserDAL {
     public function isPasswordValid($username, $password) {
         return array_key_exists($username, $this->users) && $username === $password;
     }
+    
+    function add($user, $password){
+        $this->users[$user->getUsername()] = $user;
+    }
 
 }

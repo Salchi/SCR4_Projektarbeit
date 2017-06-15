@@ -19,7 +19,7 @@ final class AuthentificationManager {
             SessionManager::storeValue(self::SESSION_USER_ID, UserDALFactory::getDAL()->get($username)->getUsername());
             return true;
         }
-
+        
         return false;
     }
 
