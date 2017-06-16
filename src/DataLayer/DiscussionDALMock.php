@@ -3,6 +3,7 @@
 namespace DataLayer;
 
 use Domain\Discussion;
+use Domain\Comment;
 
 class DiscussionDALMock implements DiscussionDAL {
 
@@ -10,7 +11,12 @@ class DiscussionDALMock implements DiscussionDAL {
 
     public function __construct() {
         for ($i = 0; $i < 100; $i++) {
-            $this->discussions[$i] = new Discussion($i, 'test' . $i, 'user', array());
+            $comments = array();
+            $rand = rand(0, 50);
+            for ($j = 0; $j < $rand; $j++) {
+                $comments[] = new Comment($i * 100 + $j, 'user', 'comment wuhu ' . $j);
+            }
+            $this->discussions[$i] = new Discussion($i, 'test' . $i, 'user', $comments);
         }
     }
 

@@ -11,7 +11,7 @@
     for ($i = 1; $i <= $model['pagesToDisplay']; $i++) {
         if ($model['currentPageNumber'] < $model['pivot'] || $model['totalPages'] <= $model['defaultPagesToDisplay']) {
             $pageIndex = $i;
-        } else if ($model['currentPageNumber'] >= ($model['totalPages'] - $model['pivot'])) {
+        } else if ($model['currentPageNumber'] > ($model['totalPages'] - $model['pivot'])) {
             $pageIndex = $model['totalPages'] - ($model['pagesToDisplay'] - $i);
         } else {
             $pageIndex = $model['currentPageNumber'] + ($i - $model['pivot']);
