@@ -1,6 +1,14 @@
 body{
     padding-top: 60px;
+    padding-bottom: 60px;
 }
 .list-group .list-group-item .list-group-item-heading .badge{
     margin-left: 1em;
+}
+
+.footer{
+    color: #9d9d9d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

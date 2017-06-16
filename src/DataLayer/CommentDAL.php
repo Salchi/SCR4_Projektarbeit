@@ -7,4 +7,5 @@ interface CommentDAL {
     function getAllForDiscussion($discussionId);
     function getAllCommentsWithPaginationWith($searchString, $offset, $numOfElements);
     function getNumberOfCommentsWith($searchString);
+    function getNewestComment();
 }

@@ -4,6 +4,7 @@ namespace Controllers;
 
 use BusinessLogic\AuthentificationManager;
 use BusinessLogic\RegistrationManager;
+use BusinessLogic\CommentManager;
 
 class User extends \MVC\Controller {
 
@@ -13,6 +14,7 @@ class User extends \MVC\Controller {
 
     public function GET_Login() {
         return $this->renderView('login', array(
+                    'newestComment' => CommentManager::getNewestComment(),
                     'username' => $this->getParam(self::PARAM_USERNAME)
         ));
     }
@@ -20,6 +22,7 @@ class User extends \MVC\Controller {
     public function POST_Login() {
         if (!AuthentificationManager::authenticate($this->getParam(self::PARAM_USERNAME), $this->getParam(self::PARAM_PASSWORD))) {
             return $this->renderView('login', array(
+                        'newestComment' => CommentManager::getNewestComment(),
                         'username' => $this->getParam(self::PARAM_USERNAME),
                         'errors' => array('Invalid username or password.')
             ));
@@ -30,6 +33,7 @@ class User extends \MVC\Controller {
 
     public function GET_Register() {
         return $this->renderView('register', array(
+                    'newestComment' => CommentManager::getNewestComment(),
                     'username' => $this->getParam(self::PARAM_USERNAME)
         ));
     }
@@ -71,6 +75,7 @@ class User extends \MVC\Controller {
         }
 
         return $this->renderView('register', array(
+                    'newestComment' => CommentManager::getNewestComment(),
                     'username' => $username,
                     'errors' => $errors
         ));

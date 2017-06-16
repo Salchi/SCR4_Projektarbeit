@@ -44,5 +44,9 @@ class CommentDALMock implements CommentDAL {
     public function getNumberOfCommentsWith($searchString){
         return sizeof($this->getAllCommentsWith($searchString));
     }
+    
+    public function getNewestComment(){
+        return $this->comments[0];
+    }
 
 }
