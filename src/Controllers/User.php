@@ -11,13 +11,13 @@ class User extends \MVC\Controller {
     const PARAM_PASSWORD = 'pwd';
     const PARAM_CONFIRMED_PASSWORD = 'confirmedPwd';
 
-    function GET_Login() {
+    public function GET_Login() {
         return $this->renderView('login', array(
                     'username' => $this->getParam(self::PARAM_USERNAME)
         ));
     }
 
-    function POST_Login() {
+    public function POST_Login() {
         if (!AuthentificationManager::authenticate($this->getParam(self::PARAM_USERNAME), $this->getParam(self::PARAM_PASSWORD))) {
             return $this->renderView('login', array(
                         'username' => $this->getParam(self::PARAM_USERNAME),
@@ -28,22 +28,14 @@ class User extends \MVC\Controller {
         return $this->redirect('Index', 'Post');
     }
 
-    function GET_Register() {
+    public function GET_Register() {
         return $this->renderView('register', array(
                     'username' => $this->getParam(self::PARAM_USERNAME)
         ));
     }
 
-    function POST_Register() {
+    private function checkRegisterParams($username, $password, $confirmedPassword) {
         $errors = array();
-
-        $username = $this->getParam(self::PARAM_USERNAME);
-        $password = $this->getParam(self::PARAM_PASSWORD);
-        $confirmedPassword = $this->getParam(self::PARAM_CONFIRMED_PASSWORD);
-
-        if (RegistrationManager::userExists($username)) {
-            $errors[] = "User with name '" . $username . "' already exists.";
-        }
 
         if (strlen($username) === 0) {
             $errors[] = "Username is required.";
@@ -53,9 +45,23 @@ class User extends \MVC\Controller {
             $errors[] = "Password is required.";
         }
 
+        if (RegistrationManager::userExists($username)) {
+            $errors[] = "User with name '" . $username . "' already exists.";
+        }
+
         if ($password !== $confirmedPassword) {
             $errors[] = "Passwords don't match.";
         }
+
+        return $errors;
+    }
+
+    public function POST_Register() {
+        $username = $this->getParam(self::PARAM_USERNAME);
+        $password = $this->getParam(self::PARAM_PASSWORD);
+        $confirmedPassword = $this->getParam(self::PARAM_CONFIRMED_PASSWORD);
+
+        $errors = $this->checkRegisterParams($username, $password, $confirmedPassword);
 
         if (sizeof($errors) === 0) {
             if (RegistrationManager::registerUser($username, $password)) {
