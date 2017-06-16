@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-class Post extends \MVC\Controller {
+class Discussion extends \MVC\Controller {
 
     function GET_Index() {
         return $this->renderView('overview', array());

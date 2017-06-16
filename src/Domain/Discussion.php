@@ -2,8 +2,8 @@
 
 namespace Domain;
 
-class Post extends Entity {
-    
+class Discussion extends Entity {
+
     private $name;
     private $creationDate;
     private $originator;
@@ -11,7 +11,7 @@ class Post extends Entity {
 
     public function __construct($id, $name, $originator, $comments) {
         parent::__construct($id);
-        
+
         $this->name = $name;
         $this->creationDate = date();
         $this->originator = $originator;

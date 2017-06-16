@@ -25,7 +25,7 @@ class User extends \MVC\Controller {
             ));
         }
 
-        return $this->redirect('Index', 'Post');
+        return $this->redirect('Index', 'Discussion');
     }
 
     public function GET_Register() {
@@ -65,7 +65,7 @@ class User extends \MVC\Controller {
 
         if (sizeof($errors) === 0) {
             if (RegistrationManager::registerUser($username, $password)) {
-                return $this->redirect('Index', 'Post');
+                return $this->redirect('Index', 'Discussion');
             }
             $errors[] = 'Something went wrong.';
         }

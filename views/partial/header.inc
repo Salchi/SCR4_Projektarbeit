@@ -21,8 +21,8 @@
             <ul class="nav navbar-nav">
                 <li><?php self::actionLink('Login', "Login", "User"); ?></li>
                 <li><?php self::actionLink('Register', "Register", "User"); ?></li>
-                <li><?php self::actionLink('Overview', "Index", "Post"); ?></li>
-                <li><?php self::actionLink('Search', "Search", "Post"); ?></li>
+                <li><?php self::actionLink('Overview', "Index", "Discussion"); ?></li>
+                <li><?php self::actionLink('Search', "Search", "Discussion"); ?></li>
             </ul>
         </div>
     </div>

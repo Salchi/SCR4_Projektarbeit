@@ -2,7 +2,7 @@
 
 namespace DataLayer;
 
-class PostDALFactory {
+class DiscussionDALFactory {
 
     private static $dal = null;
     

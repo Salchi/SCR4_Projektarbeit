@@ -2,7 +2,7 @@
 
 namespace DataLayer;
 
-interface PostDAL {
+interface DiscussionDAL {
 
     function getWithPagination($from, $to);
 }

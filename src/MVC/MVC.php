@@ -10,7 +10,7 @@ final class MVC {
 
     const PARAM_CONTROLLER = 'c';
     const PARAM_ACTION = 'a';
-    const DEFAULT_CONTROLLER = 'Post';
+    const DEFAULT_CONTROLLER = 'Discussion';
     const DEFAULT_ACTION = 'Index';
     const CONTROLLER_NAMESPACE = '\\Controllers';
 
