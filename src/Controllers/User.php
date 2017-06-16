@@ -37,11 +37,11 @@ class User extends \MVC\Controller {
     private function checkRegisterParams($username, $password, $confirmedPassword) {
         $errors = array();
 
-        if (strlen($username) === 0) {
+        if ($username === null || strlen($username) === 0) {
             $errors[] = "Username is required.";
         }
 
-        if (strlen($password) === 0) {
+        if ($confirmedPassword === null || strlen($password) === 0) {
             $errors[] = "Password is required.";
         }
 
