@@ -19,4 +19,8 @@ class DiscussionManager {
     public static function getNumberOfPages(){
         return ceil(DiscussionDALFactory::getDAL()->getNumberOfDiscussions() / self::PAGE_SIZE);
     }
+    
+    public static function getDiscussion($id){
+        return DiscussionDALFactory::getDAL()->get($id);
+    }
 }
