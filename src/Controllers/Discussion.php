@@ -10,7 +10,7 @@ class Discussion extends \MVC\Controller {
     const PARAM_ID = 'id';
     const DEFAULT_PAGES_TO_DISPLAY = 5;
 
-    function GET_Index() {
+    public function GET_Index() {
         $pageNumber = $this->hasParam(self::PARAM_PAGE_NUMBER) ? $this->getParam(self::PARAM_PAGE_NUMBER) : 1;
         $totalPages = DiscussionManager::getNumberOfPages();
         $pagesToDisplay = min(self::DEFAULT_PAGES_TO_DISPLAY, $totalPages);
@@ -28,7 +28,7 @@ class Discussion extends \MVC\Controller {
         ));
     }
     
-    function GET_Detail() {
+    public function GET_Detail() {
         if ($this->hasParam(self::PARAM_ID)) {
             return $this->renderView('detail', array(
                 'discussion' => DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID))
