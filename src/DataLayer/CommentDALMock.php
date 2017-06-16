@@ -25,4 +25,24 @@ class CommentDALMock implements CommentDAL {
         return $result;
     }
 
+    private function getAllCommentsWith($searchString){
+        $result = array();
+
+        foreach ($this->comments as $c) {
+            if (strpos($c->getText(), $searchString) !== false) {
+                $result[] = $c;
+            }
+        }
+        
+        return $result;
+    }
+    
+    public function getAllCommentsWithPaginationWith($searchString, $offset, $numOfElements){
+        return array_slice($this->getAllCommentsWith($searchString), $offset, $numOfElements);
+    }
+    
+    public function getNumberOfCommentsWith($searchString){
+        return sizeof($this->getAllCommentsWith($searchString));
+    }
+
 }

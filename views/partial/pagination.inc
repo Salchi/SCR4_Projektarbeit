@@ -3,8 +3,8 @@
         <li class="disabled"><a href="#">First</a></li>
         <li class="disabled"><a href="#">Prev</a></li>
     <?php else: ?>
-        <li><?php self::actionLinkCurrentPage('First', array($model['paramNamePageNumber'] => 1)); ?></li>
-        <li><?php self::actionLinkCurrentPage('Prev', array($model['paramNamePageNumber'] => $model['currentPageNumber'] - 1)); ?></li>
+        <li><a href="<?php echo self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => 1)) ?>">First</a></li>
+        <li><a href="<?php echo self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => $model['currentPageNumber'] - 1)) ?>">Prev</a></li>
     <?php endif; ?>
 
     <?php
@@ -17,14 +17,14 @@
             $pageIndex = $model['currentPageNumber'] + ($i - $model['pivot']);
         }
         ?>
-        <li class="<?php echo $pageIndex == $model['currentPageNumber'] ? 'active' : ''; ?>"><?php self::actionLinkCurrentPage($pageIndex, array($model['paramNamePageNumber'] => $pageIndex)); ?></li>
+        <li class="<?php echo $pageIndex == $model['currentPageNumber'] ? 'active' : ''; ?>"><a href="<?php echo self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => $pageIndex)) ?>"><?php echo $pageIndex ?></a></li>
     <?php }
 
     if ($model['currentPageNumber'] >= $model['totalPages']):?>
         <li class="disabled"><a href="#">Next</a></li>
         <li class="disabled"><a href="#">Last</a></li>
     <?php else: ?>
-        <li><?php self::actionLinkCurrentPage('Next', array($model['paramNamePageNumber'] => $model['currentPageNumber'] + 1)); ?></li>
-        <li><?php self::actionLinkCurrentPage('Last', array($model['paramNamePageNumber'] => $model['totalPages'])); ?></li>
+        <li><a href="<?php echo self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => $model['currentPageNumber'] + 1)) ?>">Next</a></li>
+        <li><a href="<?php echo self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => $model['totalPages'])) ?>">Last</a></li>
 <?php endif; ?>
 </ul>

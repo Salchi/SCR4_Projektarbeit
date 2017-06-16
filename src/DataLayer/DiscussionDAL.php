@@ -4,7 +4,7 @@ namespace DataLayer;
 
 interface DiscussionDAL {
 
-    function getWithPagination($from, $to);
+    function getWithPagination($offset, $numOfElements);
     function getNumberOfDiscussions();
     function get($id);
 }
