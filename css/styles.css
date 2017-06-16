@@ -1,3 +1,6 @@
 body{
     padding-top: 60px;
 }
+.list-group .list-group-item .list-group-item-heading .badge{
+    margin-left: 1em;
+}

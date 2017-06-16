@@ -12,7 +12,7 @@ class DiscussionDALFactory {
 
     public static function getDAL() {
         if (self::$dal === null){
-            self::$dal = new UserDALMock();
+            self::$dal = new DiscussionDALMock();
         }
         return self::$dal;
     }

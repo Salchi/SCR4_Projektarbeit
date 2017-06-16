@@ -30,20 +30,25 @@ final class MVC {
 
         return $res;
     }
-
+    
     public static function handleRequest() {
-        // determine controller class
-        $controllerName = isset($_REQUEST[self::PARAM_CONTROLLER]) ? $_REQUEST[self::PARAM_CONTROLLER] : self::DEFAULT_CONTROLLER;
-
+        $controllerName = self::getControllerName();
         $controller = self::CONTROLLER_NAMESPACE . "\\$controllerName";
 
         // determine http method and action
         $method = $_SERVER['REQUEST_METHOD'];
-        $action = isset($_REQUEST[self::PARAM_ACTION]) ? $_REQUEST[self::PARAM_ACTION] : self::DEFAULT_ACTION;
+        $action = self::getActionName();
 
         // instantiate controller and call according action method
         $m = $method . '_' . $action;
         (new $controller)->$m();
     }
 
+    public static function getControllerName(){
+        return isset($_REQUEST[self::PARAM_CONTROLLER]) ? $_REQUEST[self::PARAM_CONTROLLER] : self::DEFAULT_CONTROLLER;
+    }
+    
+    public static function getActionName(){
+        return isset($_REQUEST[self::PARAM_ACTION]) ? $_REQUEST[self::PARAM_ACTION] : self::DEFAULT_ACTION;
+    }
 }

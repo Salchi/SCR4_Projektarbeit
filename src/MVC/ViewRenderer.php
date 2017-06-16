@@ -16,6 +16,10 @@ final class ViewRenderer {
         echo(htmlentities($string));
     }
 
+    private static function actionLinkCurrentPage($content, $params = null, $cssClass = null) {
+        self::actionLink($content, MVC::getActionName(), MVC::getControllerName(), $params, $cssClass);
+    }
+    
     private static function actionLink($content, $action, $controller, $params = null, $cssClass = null) {
         $cc = $cssClass != null ? " class=\"$cssClass\"" : "";
         $url = MVC::buildActionLink($action, $controller, $params);
