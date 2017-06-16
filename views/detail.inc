@@ -6,4 +6,24 @@
     <?php self::renderView('partial/commentsList', $model['discussion']->getComments()); ?>
 </div>
 
+<script>
+$(function() {
+    function scroll(hash){
+        $('html, body').animate({
+            scrollTop: $(hash).offset().top - 60 + 'px'
+        }, 1000, 'swing');
+    }
+
+    if(window.location.hash) {
+        scroll(window.location.hash);
+    }
+    
+    $(".comments-list a").on('click', function(e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        scroll(href.substr(href.indexOf("#")));
+    });
+});
+</script>
+
 <?php self::renderView('partial/footer', $model); ?>

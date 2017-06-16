@@ -18,6 +18,7 @@ class Discussion extends \MVC\Controller {
         return $this->renderView('overview', array(
                     'discussions' => DiscussionManager::getAllPostsOnPage($pageNumber),
                     'paginationModel' => array(
+                        'baseUri' => \MVC\MVC::buildActionLink('Index', 'Discussion', array()),
                         'currentPageNumber' => $pageNumber,
                         'paramNamePageNumber' => self::PARAM_PAGE_NUMBER,
                         'pagesToDisplay' => $pagesToDisplay,
