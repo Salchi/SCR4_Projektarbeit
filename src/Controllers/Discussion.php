@@ -27,11 +27,7 @@ class Discussion extends \MVC\Controller {
                     )
         ));
     }
-
-    function GET_Search() {
-        return $this->renderView('search', array());
-    }
-
+    
     function GET_Detail() {
         if ($this->hasParam(self::PARAM_ID)) {
             return $this->renderView('detail', array(
