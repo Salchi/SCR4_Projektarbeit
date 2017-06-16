@@ -11,8 +11,10 @@ class Search extends \MVC\Controller {
     const DEFAULT_PAGES_TO_DISPLAY = 5;
 
     public function GET_Search() {
-        if ($this->hasParam(self::PARAM_SEARCH_STRING)) {
-            return $this->renderWithResult($this->getParam(self::PARAM_SEARCH_STRING));
+        $searchString = $this->getParam(self::PARAM_SEARCH_STRING);
+
+        if (sizeof($this->checkParam($searchString)) === 0) {
+            return $this->renderWithResult($searchString);
         }
 
         return $this->renderView('search', array(
