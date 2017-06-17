@@ -26,7 +26,7 @@ class DiscussionManager {
     }
 
     public static function deleteDiscussion($discussion) {
-        if (PrivilegeManager::isAuthenticatedUserAllowedToDeleteDiscussion($discussion)) {
+        if (PrivilegeManager::isAuthenticatedUserOriginator($discussion->getOriginator())) {
             DiscussionDALFactory::getDAL()->delete($discussion->getId());
         }
     }

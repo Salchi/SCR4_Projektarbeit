@@ -29,8 +29,8 @@ class DiscussionDALMock implements DiscussionDAL {
     }
 
     public function delete($id) {
-        if (PrivilegeManager::isAuthenticatedUserAllowedToDeleteDiscussion($this->get($id)) && 
-                array_key_exists($id, $this->discussions)) {
+        if (array_key_exists($id, $this->discussions) &&
+                PrivilegeManager::isAuthenticatedUserOriginator($this->get($id)->getOriginator())) {
             unset($this->discussions[$id]);
         }
     }

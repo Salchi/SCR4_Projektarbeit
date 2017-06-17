@@ -5,8 +5,8 @@ namespace Privileges;
 use BusinessLogic\AuthentificationManager;
 
 class PrivilegeManager {
-    public static function isAuthenticatedUserAllowedToDeleteDiscussion($discussion){
-        return $discussion !== null && AuthentificationManager::isAuthenticated() && 
-                $discussion->getOriginator() === AuthentificationManager::getAuthenticatedUser()->getUsername();
+    public static function isAuthenticatedUserOriginator($originator){
+        return AuthentificationManager::isAuthenticated() && 
+                $originator === AuthentificationManager::getAuthenticatedUser()->getUsername();
     }
 }

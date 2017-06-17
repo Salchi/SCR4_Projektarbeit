@@ -50,7 +50,7 @@ class Discussion extends \MVC\Controller {
             $discussion = DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID));
             $authenticatedUser = AuthentificationManager::getAuthenticatedUser()->getUsername();
 
-            if (PrivilegeManager::isAuthenticatedUserAllowedToDeleteDiscussion($discussion)) {
+            if (PrivilegeManager::isAuthenticatedUserOriginator($discussion->getOriginator())) {
                 DiscussionManager::deleteDiscussion($discussion);
             }
         }
