@@ -4,6 +4,7 @@ namespace DataLayer;
 
 use Domain\Discussion;
 use Domain\Comment;
+use Privileges\PrivilegeManager;
 
 class DiscussionDALMock implements DiscussionDAL {
 
@@ -15,15 +16,23 @@ class DiscussionDALMock implements DiscussionDAL {
         }
     }
 
-    public function getWithPagination($offset, $numOfElements){
-        return array_slice($this->discussions,  max($offset, 0), $numOfElements);
+    public function getWithPagination($offset, $numOfElements) {
+        return array_slice($this->discussions, max($offset, 0), $numOfElements);
     }
 
-    public function getNumberOfDiscussions(){
+    public function getNumberOfDiscussions() {
         return sizeof($this->discussions);
     }
-    
-    public function get($id){
+
+    public function get($id) {
         return array_key_exists($id, $this->discussions) ? $this->discussions[$id] : null;
     }
+
+    public function delete($id) {
+        if (PrivilegeManager::isAuthenticatedUserAllowedToDeleteDiscussion($this->get($id)) && 
+                array_key_exists($id, $this->discussions)) {
+            unset($this->discussions[$id]);
+        }
+    }
+
 }

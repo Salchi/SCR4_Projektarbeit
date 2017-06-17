@@ -5,8 +5,7 @@
 
     <?php
     self::renderView('partial/discussionsList', array(
-        'discussions' => $model['discussions'],
-        'authenticatedUser' => $model['authenticatedUser']
+        'discussions' => $model['discussions']
     ));
     ?>
     <?php self::renderView('partial/pagination', $model['paginationModel']); ?>

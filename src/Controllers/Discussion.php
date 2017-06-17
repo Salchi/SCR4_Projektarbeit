@@ -5,6 +5,7 @@ namespace Controllers;
 use BusinessLogic\DiscussionManager;
 use BusinessLogic\CommentManager;
 use BusinessLogic\AuthentificationManager;
+use Privileges\PrivilegeManager;
 
 class Discussion extends \MVC\Controller {
 
@@ -17,12 +18,9 @@ class Discussion extends \MVC\Controller {
         $totalPages = DiscussionManager::getNumberOfPages();
         $pagesToDisplay = min(self::DEFAULT_PAGES_TO_DISPLAY, $totalPages);
 
-        $authenticatedUser = AuthentificationManager::getAuthenticatedUser();
-
         return $this->renderView('overview', array(
                     'newestComment' => CommentManager::getNewestComment(),
                     'discussions' => DiscussionManager::getAllPostsOnPage($pageNumber),
-                    'authenticatedUser' => $authenticatedUser !== null ? $authenticatedUser->getUsername() : null,
                     'paginationModel' => array(
                         'baseUri' => \MVC\MVC::buildActionLink('Index', 'Discussion', array()),
                         'currentPageNumber' => $pageNumber,
@@ -45,13 +43,16 @@ class Discussion extends \MVC\Controller {
 
         return $this->redirect('Index', 'Discussion');
     }
-    
-    public function POST_Delete(){
-        if ($this->hasParam(self::PARAM_ID)) {
-            return $this->renderView('detail', array(
-                        'newestComment' => CommentManager::getNewestComment(),
-                        'discussion' => DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID))
-            ));
+
+    public function POST_Delete() {
+
+        if ($this->hasParam(self::PARAM_ID) && AuthentificationManager::isAuthenticated()) {
+            $discussion = DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID));
+            $authenticatedUser = AuthentificationManager::getAuthenticatedUser()->getUsername();
+
+            if (PrivilegeManager::isAuthenticatedUserAllowedToDeleteDiscussion($discussion)) {
+                DiscussionManager::deleteDiscussion($discussion);
+            }
         }
 
         return $this->redirect('Index', 'Discussion');
