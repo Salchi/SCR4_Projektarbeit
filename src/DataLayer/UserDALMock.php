@@ -22,7 +22,7 @@ class UserDALMock implements UserDAL {
         return array_key_exists($username, $this->users) && $username === $password;
     }
     
-    function add($user, $password){
+    function add($user, $passwordHash){
         $this->users[$user->getUsername()] = $user;
     }
 

@@ -6,5 +6,5 @@ interface UserDAL {
 
     function get($username);
     function isPasswordValid($username, $password);
-    function add($user, $password);
+    function add($user, $passwordHash);
 }

@@ -14,7 +14,7 @@ class RegistrationManager {
     }
     
     public static function registerUser($username, $password){
-        UserDALFactory::getDAL()->add(new User($username), $password);
+        UserDALFactory::getDAL()->add(new User($username), password_hash($password, PASSWORD_BCRYPT));
         return AuthentificationManager::authenticate($username, $password);
     }
 }
