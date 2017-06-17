@@ -1,6 +1,6 @@
 <?php
 
-namespace Privileges;
+namespace BusinessLogic;
 
 use BusinessLogic\AuthentificationManager;
 

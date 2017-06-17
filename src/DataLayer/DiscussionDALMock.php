@@ -4,7 +4,7 @@ namespace DataLayer;
 
 use Domain\Discussion;
 use Domain\Comment;
-use Privileges\PrivilegeManager;
+use BusinessLogic\PrivilegeManager;
 
 class DiscussionDALMock implements DiscussionDAL {
 

@@ -12,7 +12,7 @@
                     <p class="list-group-item-text">Created by <?php self::htmlOut($discussion->getOriginator()); ?>, on <?php self::htmlOut($discussion->getCreationDate()); ?></p>  
                     <p class="list-group-item-text">Last comment by NAME_HERE, on DATE_HERE</p>
                 </div>
-                <?php if (\Privileges\PrivilegeManager::isAuthenticatedUserOriginator($discussion->getOriginator())): ?>
+                <?php if ($model['currUser'] != null && $model['currUser']->getUsername() == $discussion->getOriginator()): ?>
                     <div class="col-xs-2">
                         <?php
                         self::renderView('partial/deleteIcon', array(

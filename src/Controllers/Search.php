@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use BusinessLogic\CommentManager;
+use BusinessLogic\AuthentificationManager;
 
 class Search extends \MVC\Controller {
 
@@ -18,6 +19,7 @@ class Search extends \MVC\Controller {
         }
 
         return $this->renderView('search', array(
+                    'currUser' => AuthentificationManager::getAuthenticatedUser(),
                     'newestComment' => CommentManager::getNewestComment(),
                     'searchString' => '',
                     'result' => null
@@ -41,6 +43,7 @@ class Search extends \MVC\Controller {
         $pagesToDisplay = min(self::DEFAULT_PAGES_TO_DISPLAY, $totalPages);
 
         return $this->renderView('search', array(
+                    'currUser' => AuthentificationManager::getAuthenticatedUser(),
                     'newestComment' => CommentManager::getNewestComment(),
                     'searchString' => $searchString,
                     'numberOfComments' => $numberOfComments,
@@ -66,6 +69,7 @@ class Search extends \MVC\Controller {
         }
 
         return $this->renderView('search', array(
+                    'currUser' => AuthentificationManager::getAuthenticatedUser(),
                     'newestComment' => CommentManager::getNewestComment(),
                     'errors' => $errors,
                     'searchString' => $searchString,

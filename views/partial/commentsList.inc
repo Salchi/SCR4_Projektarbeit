@@ -7,7 +7,7 @@
                     <h4 class="list-group-item-heading"><?php self::htmlOut($comment->getText()); ?></h4>
                     <p class="list-group-item-text">Created by <?php self::htmlOut($comment->getOriginator()); ?>, on <?php self::htmlOut($comment->getCreationDate()); ?></p>  
                 </div>
-                <?php if (\Privileges\PrivilegeManager::isAuthenticatedUserOriginator($comment->getOriginator())): ?>
+                <?php if ($model['currUser'] != null && $model['currUser']->getUsername() == $comment->getOriginator()): ?>
                     <div class="col-xs-2">
                         <?php
                         self::renderView('partial/deleteIcon', array(

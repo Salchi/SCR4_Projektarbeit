@@ -3,7 +3,7 @@
 namespace BusinessLogic;
 
 use DataLayer\DiscussionDALFactory;
-use Privileges\PrivilegeManager;
+use BusinessLogic\PrivilegeManager;
 use Domain\Discussion;
 
 class DiscussionManager {

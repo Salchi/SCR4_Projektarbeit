@@ -9,7 +9,7 @@
             <h4>
                 <strong>
                     <?php
-                    if (Privileges\PrivilegeManager::isAuthenticatedUserAllowedToAdd()) {
+                    if ($model['currUser'] != null) {
                         self::actionLink('Add discussion', 'Add', 'Discussion');
                     }
                     ?>
@@ -20,6 +20,7 @@
 
     <?php
     self::renderView('partial/discussionsList', array(
+        'currUser' => $model['currUser'],
         'discussions' => $model['discussions']
     ));
     ?>

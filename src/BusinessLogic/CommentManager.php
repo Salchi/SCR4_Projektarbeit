@@ -3,7 +3,7 @@
 namespace BusinessLogic;
 
 use DataLayer\CommentDALFactory;
-use Privileges\PrivilegeManager;
+use BusinessLogic\PrivilegeManager;
 use Domain\Comment;
 
 class CommentManager {

@@ -5,7 +5,7 @@ namespace Controllers;
 use BusinessLogic\DiscussionManager;
 use BusinessLogic\CommentManager;
 use BusinessLogic\AuthentificationManager;
-use Privileges\PrivilegeManager;
+use BusinessLogic\PrivilegeManager;
 
 class Discussion extends \MVC\Controller {
 
@@ -20,6 +20,7 @@ class Discussion extends \MVC\Controller {
         $pagesToDisplay = min(self::DEFAULT_PAGES_TO_DISPLAY, $totalPages);
 
         return $this->renderView('overview', array(
+                    'currUser' => AuthentificationManager::getAuthenticatedUser(),
                     'newestComment' => CommentManager::getNewestComment(),
                     'discussions' => DiscussionManager::getAllPostsOnPage($pageNumber),
                     'paginationModel' => array(
@@ -37,6 +38,7 @@ class Discussion extends \MVC\Controller {
     public function GET_Detail() {
         if ($this->hasParam(self::PARAM_ID)) {
             return $this->renderView('detail', array(
+                        'currUser' => AuthentificationManager::getAuthenticatedUser(),
                         'newestComment' => CommentManager::getNewestComment(),
                         'discussion' => DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID)),
                         'redirectUrl' => '?' . $_SERVER['QUERY_STRING']
@@ -60,7 +62,10 @@ class Discussion extends \MVC\Controller {
 
     public function GET_Add() {
         if (PrivilegeManager::isAuthenticatedUserAllowedToAdd()) {
-            return $this->renderView('addDiscussion', array('name' => ''));
+            return $this->renderView('addDiscussion', array(
+                        'currUser' => AuthentificationManager::getAuthenticatedUser(),
+                        'name' => ''
+            ));
         }
 
         return $this->redirect('Index', 'Discussion');
@@ -77,20 +82,21 @@ class Discussion extends \MVC\Controller {
     public function POST_Add() {
         if (PrivilegeManager::isAuthenticatedUserAllowedToAdd() &&
                 $this->hasParam(self::PARAM_DISCUSSION_NAME)) {
-            
+
             $name = $this->getParam(self::PARAM_DISCUSSION_NAME);
             $errors = $this->checkParam($name);
 
             if (sizeof($errors) > 0) {
                 return $this->renderView('addDiscussion', array(
+                            'currUser' => AuthentificationManager::getAuthenticatedUser(),
                             'name' => '',
                             'errors' => $errors
                 ));
             }
-            
+
             DiscussionManager::addDiscussion($name);
         }
-        
+
         return $this->redirect('Index', 'Discussion');
     }
 

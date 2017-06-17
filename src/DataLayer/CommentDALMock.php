@@ -3,6 +3,7 @@
 namespace DataLayer;
 
 use Domain\Comment;
+use BusinessLogic\PrivilegeManager;
 
 class CommentDALMock implements CommentDAL {
 
@@ -55,7 +56,7 @@ class CommentDALMock implements CommentDAL {
     
     public function delete($id){
         if (array_key_exists($id, $this->comments) && 
-                \Privileges\PrivilegeManager::isAuthenticatedUserOriginator($this->get($id)->getOriginator())){
+                PrivilegeManager::isAuthenticatedUserOriginator($this->get($id)->getOriginator())){
             unset($this->comments[$id]);
         }
     }

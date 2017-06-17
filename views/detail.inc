@@ -10,7 +10,7 @@
             <h4>
                 <strong>
                     <?php
-                    if (Privileges\PrivilegeManager::isAuthenticatedUserAllowedToAdd()) {
+                    if ($model['currUser'] != null) {
                         self::actionLink('Add comment', 'Add', 'Comment', array(
                             'did' => $model['discussion']->getId(),
                             'red' => $model['redirectUrl']
@@ -28,6 +28,7 @@
         self::renderView('partial/warning', array('warning' => 'Disucssion has no comments yet.'));
     }
     self::renderView('partial/commentsList', array(
+        'currUser' => $model['currUser'],
         'redirectUrl' => self::getUrl('Detail', 'Discussion', array('id' => $model['discussion']->getId())),
         'comments' => $model['discussion']->getComments()
     ));

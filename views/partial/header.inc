@@ -19,10 +19,13 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><?php self::actionLink('Login', "Login", "User"); ?></li>
-                <li><?php self::actionLink('Register', "Register", "User"); ?></li>
                 <li><?php self::actionLink('Overview', "Index", "Discussion"); ?></li>
                 <li><?php self::actionLink('Search', "Search", "Search"); ?></li>
+                <?php if($model['currUser'] == null): ?>
+                <li><?php self::actionLink('Login', "Login", "User"); ?></li>
+                <?php else: ?>
+                <li><?php self::actionLink('Logout', "Logout", "User"); ?></li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

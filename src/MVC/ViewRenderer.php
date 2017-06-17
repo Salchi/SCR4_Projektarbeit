@@ -15,8 +15,8 @@ final class ViewRenderer {
     private static function htmlOut($string) {
         echo(htmlentities($string));
     }
-    
-    private static function getUrl($action, $controller, $params = null){
+
+    private static function getUrl($action, $controller, $params = null) {
         return MVC::buildActionLink($action, $controller, $params);
     }
 
