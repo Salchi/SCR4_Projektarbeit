@@ -59,10 +59,6 @@ class User extends \MVC\Controller {
         if ($password === null || strlen($password) === 0) {
             $errors[] = "Password is required.";
         }
-        elseif(strlen($password) > 50){
-            $errors[] = "Length of password can't be greater than 50.";
-        }
-
 
         if (RegistrationManager::userExists($username)) {
             $errors[] = "User with name '" . $username . "' already exists.";
