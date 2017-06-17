@@ -5,7 +5,7 @@
 
     <?php self::beginActionForm('Search', 'Search', 'post'); ?>
     <div class="input-group">
-        <input type="text" placeholder="search string" class="form-control" name="searchString" value="<?php echo $model['searchString']; ?>" required>
+        <input type="text" placeholder="search string" class="form-control" name="searchString" value="<?php self::htmlOut($model['searchString']); ?>" required>
         <div class="input-group-btn">
             <button class="btn btn-primary">Search</button>
         </div>
