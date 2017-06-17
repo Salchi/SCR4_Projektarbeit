@@ -4,6 +4,7 @@ namespace Controllers;
 
 use BusinessLogic\DiscussionManager;
 use BusinessLogic\CommentManager;
+use BusinessLogic\AuthentificationManager;
 
 class Discussion extends \MVC\Controller {
 
@@ -16,9 +17,12 @@ class Discussion extends \MVC\Controller {
         $totalPages = DiscussionManager::getNumberOfPages();
         $pagesToDisplay = min(self::DEFAULT_PAGES_TO_DISPLAY, $totalPages);
 
+        $authenticatedUser = AuthentificationManager::getAuthenticatedUser();
+
         return $this->renderView('overview', array(
                     'newestComment' => CommentManager::getNewestComment(),
                     'discussions' => DiscussionManager::getAllPostsOnPage($pageNumber),
+                    'authenticatedUser' => $authenticatedUser !== null ? $authenticatedUser->getUsername() : null,
                     'paginationModel' => array(
                         'baseUri' => \MVC\MVC::buildActionLink('Index', 'Discussion', array()),
                         'currentPageNumber' => $pageNumber,
@@ -30,15 +34,16 @@ class Discussion extends \MVC\Controller {
                     )
         ));
     }
-    
+
     public function GET_Detail() {
         if ($this->hasParam(self::PARAM_ID)) {
             return $this->renderView('detail', array(
-                'newestComment' => CommentManager::getNewestComment(),
-                'discussion' => DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID))
+                        'newestComment' => CommentManager::getNewestComment(),
+                        'discussion' => DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID))
             ));
         }
-        
+
         return $this->GET_Index();
     }
+
 }

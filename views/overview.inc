@@ -3,7 +3,12 @@
 <div class="container">
     <h1>Overview</h1>
 
-    <?php self::renderView('partial/discussionsList', $model['discussions']); ?>
+    <?php
+    self::renderView('partial/discussionsList', array(
+        'discussions' => $model['discussions'],
+        'authenticatedUser' => $model['authenticatedUser']
+    ));
+    ?>
     <?php self::renderView('partial/pagination', $model['paginationModel']); ?>
 </div>
 
