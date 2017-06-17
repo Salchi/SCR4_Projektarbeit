@@ -10,7 +10,9 @@
                         ?> <span class="badge"><?php echo sizeof($discussion->getComments()); ?></span>
                     </h4>
                     <p class="list-group-item-text">Created by <?php self::htmlOut($discussion->getOriginator()); ?>, on <?php self::htmlOut($discussion->getCreationDate()); ?></p>  
-                    <p class="list-group-item-text">Last comment by NAME_HERE, on DATE_HERE</p>
+                    <?php if (sizeof($discussion->getComments()) > 0): ?>
+                        <p class="list-group-item-text">Last comment by <?php self::htmlOut($discussion->getComments()[0]->getOriginator()); ?>, on <?php self::htmlOut($discussion->getComments()[0]->getCreationDate()); ?></p>
+                    <?php endif; ?>
                 </div>
                 <?php if ($model['currUser'] != null && $model['currUser']->getUsername() == $discussion->getOriginator()): ?>
                     <div class="col-xs-2">
@@ -24,8 +26,8 @@
                         ));
                         ?>
                     </div>
-        <?php endif; ?>
+                <?php endif; ?>
             </div>
         </a>
-<?php endforeach; ?>
+    <?php endforeach; ?>
 </div>

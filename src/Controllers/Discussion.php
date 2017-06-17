@@ -63,6 +63,7 @@ class Discussion extends \MVC\Controller {
     public function GET_Add() {
         if (PrivilegeManager::isAuthenticatedUserAllowedToAdd()) {
             return $this->renderView('addDiscussion', array(
+                        'newestComment' => CommentManager::getNewestComment(),
                         'currUser' => AuthentificationManager::getAuthenticatedUser(),
                         'name' => ''
             ));
@@ -88,6 +89,7 @@ class Discussion extends \MVC\Controller {
 
             if (sizeof($errors) > 0) {
                 return $this->renderView('addDiscussion', array(
+                            'newestComment' => CommentManager::getNewestComment(),
                             'currUser' => AuthentificationManager::getAuthenticatedUser(),
                             'name' => '',
                             'errors' => $errors
