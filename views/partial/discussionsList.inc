@@ -1,3 +1,4 @@
+<script src="js/scripts.js"></script>
 <div class="list-group" id="discussions-list">
     <?php foreach ($model['discussions'] as $discussion): ?>
         <a href="<?php self::htmlOut(self::getUrl('Detail', 'Discussion', array('id' => $discussion->getId()))); ?>" class="list-group-item container">
@@ -13,14 +14,18 @@
                 </div>
                 <?php if (\Privileges\PrivilegeManager::isAuthenticatedUserAllowedToDeleteDiscussion($discussion)): ?>
                     <div class="col-xs-2">
-                        <?php self::beginActionForm('Delete', 'Discussion', 'post', array('id' => $discussion->getId()), 'pull-right'); ?>
-                        <button class="btn btn-link">
-                            <span class="glyphicon glyphicon-remove text-danger"/>
-                        </button>
-                        <?php self::endActionForm(); ?>
+                        <?php
+                        self::renderView('partial/deleteIcon', array(
+                            'controller' => 'Discussion',
+                            'action' => 'Delete',
+                            'params' => array('id' => $discussion->getId()),
+                            'cssClass' => 'delete-form pull-right',
+                            'onSubmit' => 'return requestConfirmation(\'Are you sure?\')'
+                        ));
+                        ?>
                     </div>
-                <?php endif; ?>
+        <?php endif; ?>
             </div>
         </a>
-    <?php endforeach; ?>
+<?php endforeach; ?>
 </div>

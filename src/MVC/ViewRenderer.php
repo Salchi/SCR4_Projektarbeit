@@ -45,10 +45,11 @@ LINK;
         return $result;
     }
 
-    private static function beginActionForm($action, $controller, $method = 'get', $params = null, $cssClass = null) {
+    private static function beginActionForm($action, $controller, $method = 'get', $params = null, $cssClass = null, $onSubmit = null) {
         $cc = $cssClass != null ? " class=\"$cssClass\"" : "";
+        $os = $onSubmit != null ? " onsubmit=\"$onSubmit\"" : "";
         $form = <<<FORM
-<form method="$method" action="?"$cc>
+<form method="$method" action="?"$cc$os>
 	<input type="hidden" name="c" value="$controller">
 	<input type="hidden" name="a" value="$action">
 FORM;
