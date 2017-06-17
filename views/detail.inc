@@ -1,16 +1,26 @@
 <?php self::renderView('partial/header', $model); ?>
 
 <div class="container">
-    <script src="js/scripts.js"></script>
-
-    <form method="post" action="?" class="delete-form pull-right" onsubmit="return requestConfirmation('Are you sure?')">
-        <input type="hidden" name="c" value="Comment">
-        <input type="hidden" name="a" value="Delete"><input type="hidden" name="id" value="5"><button class="btn btn-link">
-            <span class="glyphicon glyphicon-remove text-danger">
-            </span></button>
-    </form>
-    <h1>Detail - <?php self::htmlOut($model['discussion']->getName()); ?></h1>
-    <p>Created by <?php self::htmlOut($model['discussion']->getOriginator()); ?>, on <?php self::htmlOut($model['discussion']->getCreationDate()); ?></p>  
+    <div class="row v-center">
+        <div class="col-xs-10">
+            <h1>Detail - <?php self::htmlOut($model['discussion']->getName()); ?></h1>
+            <p>Created by <?php self::htmlOut($model['discussion']->getOriginator()); ?>, on <?php self::htmlOut($model['discussion']->getCreationDate()); ?></p>  
+        </div>
+        <div class="col-xs-2">
+            <h4>
+                <strong>
+                    <?php
+                    if (Privileges\PrivilegeManager::isAuthenticatedUserAllowedToAdd()) {
+                        self::actionLink('Add comment', 'Add', 'Comment', array(
+                            'did' => $model['discussion']->getId(),
+                            'red' => $model['redirectUrl']
+                        ));
+                    }
+                    ?>
+                </strong>
+            </h4>
+        </div>
+    </div>
     <?php
     if (sizeof($model['discussion']->getComments()) > 0) {
         self::renderView('partial/information', array('information' => 'Disucssion has ' . sizeof($model['discussion']->getComments()) . ' comments.'));

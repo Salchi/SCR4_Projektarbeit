@@ -9,4 +9,8 @@ class PrivilegeManager {
         return AuthentificationManager::isAuthenticated() && 
                 $originator === AuthentificationManager::getAuthenticatedUser()->getUsername();
     }
+    
+    public static function isAuthenticatedUserAllowedToAdd(){
+        return AuthentificationManager::isAuthenticated();
+    }
 }

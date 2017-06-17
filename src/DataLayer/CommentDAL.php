@@ -10,4 +10,5 @@ interface CommentDAL {
     function getNewestComment();
     function get($id);
     function delete($id);
+    function add($comment);
 }

@@ -1,5 +1,4 @@
 <script src="js/scripts.js"></script>
-
 <div class="list-group comments-list">
     <?php foreach ($model['comments'] as $comment): ?>
         <a href="<?php echo self::getUrl('Detail', 'Discussion', array('id' => $comment->getDiscussionId())) . '#' . $comment->getId(); ?>" class="list-group-item" id="<?php echo $comment->getId(); ?>">

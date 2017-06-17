@@ -4,6 +4,7 @@ namespace BusinessLogic;
 
 use DataLayer\CommentDALFactory;
 use Privileges\PrivilegeManager;
+use Domain\Comment;
 
 class CommentManager {
     const PAGE_SIZE = 5; 
@@ -27,6 +28,12 @@ class CommentManager {
     public static function deleteComment($comment){
         if (PrivilegeManager::isAuthenticatedUserOriginator($comment->getOriginator())) {
             CommentDALFactory::getDAL()->delete($comment->getId());
+        }
+    }
+    
+    public static function addComment($discussionId, $text){
+        if (PrivilegeManager::isAuthenticatedUserAllowedToAdd()){
+            CommentDALFactory::getDAL()->add(new Comment(-1, $discussionId, AuthentificationManager::getAuthenticatedUser()->getUsername(), $text));
         }
     }
 }

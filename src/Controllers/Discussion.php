@@ -37,7 +37,8 @@ class Discussion extends \MVC\Controller {
         if ($this->hasParam(self::PARAM_ID)) {
             return $this->renderView('detail', array(
                         'newestComment' => CommentManager::getNewestComment(),
-                        'discussion' => DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID))
+                        'discussion' => DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID)),
+                        'redirectUrl' => '?' . $_SERVER['QUERY_STRING']
             ));
         }
 
@@ -45,7 +46,6 @@ class Discussion extends \MVC\Controller {
     }
 
     public function POST_Delete() {
-
         if ($this->hasParam(self::PARAM_ID) && AuthentificationManager::isAuthenticated()) {
             $discussion = DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID));
             $authenticatedUser = AuthentificationManager::getAuthenticatedUser()->getUsername();

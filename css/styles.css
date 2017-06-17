@@ -12,3 +12,8 @@ body{
     align-items: center;
     justify-content: center;
 }
+
+.v-center {
+   display: flex;
+   align-items: center;
+}

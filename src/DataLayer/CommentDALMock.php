@@ -59,4 +59,8 @@ class CommentDALMock implements CommentDAL {
             unset($this->comments[$id]);
         }
     }
+    
+    public function add($comment){
+        $this->comments[$comment->getId()] = $comment;
+    }
 }
