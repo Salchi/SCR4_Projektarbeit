@@ -8,4 +8,5 @@ interface DiscussionDAL {
     function getNumberOfDiscussions();
     function get($id);
     function delete($id);
+    function add($discussion);
 }

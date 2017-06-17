@@ -11,6 +11,7 @@ class Discussion extends \MVC\Controller {
 
     const PARAM_PAGE_NUMBER = 'pnr';
     const PARAM_ID = 'id';
+    const PARAM_DISCUSSION_NAME = 'n';
     const DEFAULT_PAGES_TO_DISPLAY = 5;
 
     public function GET_Index() {
@@ -48,13 +49,48 @@ class Discussion extends \MVC\Controller {
     public function POST_Delete() {
         if ($this->hasParam(self::PARAM_ID) && AuthentificationManager::isAuthenticated()) {
             $discussion = DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID));
-            $authenticatedUser = AuthentificationManager::getAuthenticatedUser()->getUsername();
 
             if (PrivilegeManager::isAuthenticatedUserOriginator($discussion->getOriginator())) {
                 DiscussionManager::deleteDiscussion($discussion);
             }
         }
 
+        return $this->redirect('Index', 'Discussion');
+    }
+
+    public function GET_Add() {
+        if (PrivilegeManager::isAuthenticatedUserAllowedToAdd()) {
+            return $this->renderView('addDiscussion', array('name' => ''));
+        }
+
+        return $this->redirect('Index', 'Discussion');
+    }
+
+    private function checkParam($name) {
+        $errors = array();
+        if (strlen($name) <= 0) {
+            $errors[] = 'Name is requried.';
+        }
+        return $errors;
+    }
+
+    public function POST_Add() {
+        if (PrivilegeManager::isAuthenticatedUserAllowedToAdd() &&
+                $this->hasParam(self::PARAM_DISCUSSION_NAME)) {
+            
+            $name = $this->getParam(self::PARAM_DISCUSSION_NAME);
+            $errors = $this->checkParam($name);
+
+            if (sizeof($errors) > 0) {
+                return $this->renderView('addDiscussion', array(
+                            'name' => '',
+                            'errors' => $errors
+                ));
+            }
+            
+            DiscussionManager::addDiscussion($name);
+        }
+        
         return $this->redirect('Index', 'Discussion');
     }
 

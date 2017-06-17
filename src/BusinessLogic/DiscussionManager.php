@@ -4,6 +4,7 @@ namespace BusinessLogic;
 
 use DataLayer\DiscussionDALFactory;
 use Privileges\PrivilegeManager;
+use Domain\Discussion;
 
 class DiscussionManager {
 
@@ -28,6 +29,13 @@ class DiscussionManager {
     public static function deleteDiscussion($discussion) {
         if (PrivilegeManager::isAuthenticatedUserOriginator($discussion->getOriginator())) {
             DiscussionDALFactory::getDAL()->delete($discussion->getId());
+        }
+    }
+    
+    public static function addDiscussion($name){
+        if (PrivilegeManager::isAuthenticatedUserAllowedToAdd()){
+            DiscussionDALFactory::getDAL()->add(new Discussion(-1, $name, 
+                    AuthentificationManager::getAuthenticatedUser()->getUsername(), array()));
         }
     }
 

@@ -35,4 +35,10 @@ class DiscussionDALMock implements DiscussionDAL {
         }
     }
 
+    public function add($discussion) {
+        if (PrivilegeManager::isAuthenticatedUserAllowedToAdd()) {
+            $this->discussions[$discussion->getId()] = $discussion;
+        }
+    }
+
 }
