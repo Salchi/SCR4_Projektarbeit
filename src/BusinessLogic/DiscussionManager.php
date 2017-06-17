@@ -35,7 +35,7 @@ class DiscussionManager {
     public static function addDiscussion($name){
         if (PrivilegeManager::isAuthenticatedUserAllowedToAdd()){
             DiscussionDALFactory::getDAL()->add(new Discussion(-1, $name, 
-                    AuthentificationManager::getAuthenticatedUser()->getUsername(), array()));
+                    AuthentificationManager::getAuthenticatedUser()->getUsername(), date('Y-m-d'), array()));
         }
     }
 

@@ -3,8 +3,6 @@
 namespace Domain;
 
 class Discussion extends Entity {
-
-    const DATE_FORMAT = 'Y-m-d';
     
     private $name;
     private $creationDate;
@@ -24,11 +22,11 @@ class Discussion extends Entity {
         return $this->comments;
     }
     
-    public function __construct($id, $name, $originator, $comments) {
+    public function __construct($id, $name, $originator, $creationDate, $comments) {
         parent::__construct($id);
 
         $this->name = $name;
-        $this->creationDate = date(self::DATE_FORMAT);
+        $this->creationDate = $creationDate;
         $this->originator = $originator;
         $this->comments = $comments;
     }

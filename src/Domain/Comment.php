@@ -20,6 +20,9 @@ class Comment extends Entity{
     public function getDiscussionId(){
         return $this->discussionId;
     }
+    public function setDiscussionId($discussionId){
+        $this->discussionId = $discussionId;
+    }
     public function getOriginator(){
         return $this->originator;
     }

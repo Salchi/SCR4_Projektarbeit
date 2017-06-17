@@ -12,7 +12,7 @@ class DiscussionDALMock implements DiscussionDAL {
 
     public function __construct() {
         for ($i = 0; $i < 100; $i++) {
-            $this->discussions[$i] = new Discussion($i, 'test' . $i, 'user', CommentDALFactory::getDAL()->getAllForDiscussion($i));
+            $this->discussions[$i] = new Discussion($i, 'test' . $i, 'user', date('Y-m-d'), CommentDALFactory::getDAL()->getAllForDiscussion($i));
         }
     }
 
