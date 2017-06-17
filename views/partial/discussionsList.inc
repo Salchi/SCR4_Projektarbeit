@@ -1,4 +1,4 @@
-<div class="list-group">
+<div class="list-group" id="discussions-list">
     <?php foreach ($model['discussions'] as $discussion): ?>
         <a href="<?php self::htmlOut(self::getUrl('Detail', 'Discussion', array('id' => $discussion->getId()))); ?>" class="list-group-item container">
             <div class="row">
@@ -13,7 +13,11 @@
                 </div>
                 <?php if ($model['authenticatedUser'] === $discussion->getOriginator()): ?>
                     <div class="col-xs-2">
-                        <span class="glyphicon glyphicon-remove pull-right text-danger"/>
+                        <?php self::beginActionForm('Delete', 'Discussion', 'post', array('id' => $discussion->getId()), 'pull-right'); ?>
+                        <button class="btn btn-link">
+                            <span class="glyphicon glyphicon-remove text-danger"/>
+                        </button>
+                        <?php self::endActionForm(); ?>
                     </div>
                 <?php endif; ?>
             </div>

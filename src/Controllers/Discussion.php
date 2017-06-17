@@ -43,7 +43,18 @@ class Discussion extends \MVC\Controller {
             ));
         }
 
-        return $this->GET_Index();
+        return $this->redirect('Index', 'Discussion');
+    }
+    
+    public function POST_Delete(){
+        if ($this->hasParam(self::PARAM_ID)) {
+            return $this->renderView('detail', array(
+                        'newestComment' => CommentManager::getNewestComment(),
+                        'discussion' => DiscussionManager::getDiscussion($this->getParam(self::PARAM_ID))
+            ));
+        }
+
+        return $this->redirect('Index', 'Discussion');
     }
 
 }
