@@ -1,37 +1,46 @@
 <?php self::renderView('partial/header', $model); ?>
 
 <div class="container">
+    <script src="js/scripts.js"></script>
+
+    <form method="post" action="?" class="delete-form pull-right" onsubmit="return requestConfirmation('Are you sure?')">
+        <input type="hidden" name="c" value="Comment">
+        <input type="hidden" name="a" value="Delete"><input type="hidden" name="id" value="5"><button class="btn btn-link">
+            <span class="glyphicon glyphicon-remove text-danger">
+            </span></button>
+    </form>
     <h1>Detail - <?php self::htmlOut($model['discussion']->getName()); ?></h1>
     <p>Created by <?php self::htmlOut($model['discussion']->getOriginator()); ?>, on <?php self::htmlOut($model['discussion']->getCreationDate()); ?></p>  
-    <?php 
-    if (sizeof($model['discussion']->getComments()) > 0){
-        self::renderView('partial/information', array('information' => 'Disucssion has '. sizeof($model['discussion']->getComments()) . ' comments.')); 
+    <?php
+    if (sizeof($model['discussion']->getComments()) > 0) {
+        self::renderView('partial/information', array('information' => 'Disucssion has ' . sizeof($model['discussion']->getComments()) . ' comments.'));
+    } else {
+        self::renderView('partial/warning', array('warning' => 'Disucssion has no comments yet.'));
     }
-    else{
-        self::renderView('partial/warning', array('warning' => 'Disucssion has no comments yet.')); 
-    }
-    self::renderView('partial/commentsList', $model['discussion']->getComments()); 
+    self::renderView('partial/commentsList', array(
+        'redirectUrl' => self::getUrl('Detail', 'Discussion', array('id' => $model['discussion']->getId())),
+        'comments' => $model['discussion']->getComments()
+    ));
     ?>
 </div>
 
 <script>
-$(function() {
-    function scroll(hash){
-        $('html, body').animate({
-            scrollTop: $(hash).offset().top - 60 + 'px'
-        }, 1000, 'swing');
-    }
+    $(function () {
+        function scroll(hash) {
+            $('html, body').animate({
+                scrollTop: $(hash).offset().top - 60 + 'px'
+            }, 1000, 'swing');
+        }
 
-    if(window.location.hash) {
-        scroll(window.location.hash);
-    }
-    
-    $(".comments-list a").on('click', function(e) {
-        e.preventDefault();
-        var href = $(this).attr('href');
-        scroll(href.substr(href.indexOf("#")));
+        if (window.location.hash) {
+            scroll(window.location.hash);
+        }
+
+        $(".comments-list a").on('click', function (e) {
+            var href = $(this).attr('href');
+            scroll(href.substr(href.indexOf("#")));
+        });
     });
-});
 </script>
 
 <?php self::renderView('partial/footer', $model); ?>

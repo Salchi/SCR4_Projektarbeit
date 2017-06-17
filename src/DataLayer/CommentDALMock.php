@@ -49,4 +49,14 @@ class CommentDALMock implements CommentDAL {
         return $this->comments[0];
     }
 
+    public function get($id){
+        return array_key_exists($id, $this->comments) ? $this->comments[$id] : null;
+    }
+    
+    public function delete($id){
+        if (array_key_exists($id, $this->comments) && 
+                \Privileges\PrivilegeManager::isAuthenticatedUserOriginator($this->get($id)->getOriginator())){
+            unset($this->comments[$id]);
+        }
+    }
 }

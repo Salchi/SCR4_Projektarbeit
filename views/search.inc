@@ -16,7 +16,10 @@
     <?php
     if (sizeof($model['result']) > 0) {
         self::renderView('partial/information', array('information' => "Found " . $model['numberOfComments'] . " comments."));
-        self::renderView('partial/commentsList', $model['result']);
+        self::renderView('partial/commentsList', array(
+            'redirectUrl' => self::getUrl('Search', 'Search', array('searchString' => $model['searchString'])),
+            'comments' => $model['result']
+        ));
         self::renderView('partial/pagination', $model['paginationModel']);
     } else if ($model['result'] !== null) {
         self::renderView('partial/warning', array('warning' => "No comment contains '" . $model['searchString'] . "'."));

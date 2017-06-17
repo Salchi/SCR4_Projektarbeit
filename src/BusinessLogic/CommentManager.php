@@ -3,6 +3,7 @@
 namespace BusinessLogic;
 
 use DataLayer\CommentDALFactory;
+use Privileges\PrivilegeManager;
 
 class CommentManager {
     const PAGE_SIZE = 5; 
@@ -17,5 +18,15 @@ class CommentManager {
     
     public static function getNewestComment(){
         return CommentDALFactory::getDAL()->getNewestComment();
+    }
+    
+    public static function getComment($id){
+        return CommentDALFactory::getDAL()->get($id);
+    }
+    
+    public static function deleteComment($comment){
+        if (PrivilegeManager::isAuthenticatedUserOriginator($comment->getOriginator())) {
+            CommentDALFactory::getDAL()->delete($comment->getId());
+        }
     }
 }
