@@ -11,7 +11,7 @@ class CommentDALMock implements CommentDAL {
 
     public function __construct() {
         for ($i = 0; $i < 1000; $i++) {
-            $this->comments[] = new Comment($i, 1, 'user', 'wow ' . $i);
+            $this->comments[] = new Comment($i, 1, 'user', 'wow ' . $i, date('Y-m-d'));
         }
     }
 

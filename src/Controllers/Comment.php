@@ -4,7 +4,7 @@ namespace Controllers;
 
 use BusinessLogic\AuthentificationManager;
 use BusinessLogic\CommentManager;
-use BusinessLogic\ic\PrivilegeManager;
+use BusinessLogic\PrivilegeManager;
 
 class Comment extends \MVC\Controller {
 

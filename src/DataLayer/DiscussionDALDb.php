@@ -3,48 +3,27 @@
 namespace DataLayer;
 
 use Domain\Discussion;
-use Domain\Comment;
 use BusinessLogic\PrivilegeManager;
 
-class DiscussionDALDb implements DiscussionDAL {
+class DiscussionDALDb extends DbDALBase implements DiscussionDAL {
 
     public function __construct($server, $userName, $password, $database) {
         parent::__construct($server, $userName, $password, $database);
     }
 
     public function getWithPagination($offset, $numOfElements) {
-        return array();
-    }
-
-    public function getNumberOfDiscussions() {
-        $con = $this->getConnection();
-        $res = $this->executeQuery($con, 'SELECT count(id) FROM discussion');
-
-        while ($count = $res->fetchObject()) {
-            return $count;
-        }
-
-        $res->close();
-        $con->close();
-        return 0;
-    }
-
-    public function get($id) {
         $discussions = array();
         $con = $this->getConnection();
-        $stat = $this->executeStatement($con, 
-            'SELECT name, FK_originator, creationDate 
+        $stat = $this->executeStatement($con, 'SELECT id, name, FK_originator, creationDate 
             FROM discussion
-            WHERE id = ?',
-            function($s) use($id)
-            {
-                $s->bind_param('i', $id);
-            });
+            ORDER BY creationDate, id DESC
+            LIMIT ?,?', function($s) use($offset, $numOfElements) {
+            $s->bind_param('ii', $offset, $numOfElements);
+        });
 
         $stat->bind_result($id, $name, $originator, $creationDate);
 
-        while($stat->fetch())
-        {
+        while ($stat->fetch()) {
             $discussions[] = new Discussion($id, $name, $originator, $creationDate, CommentDALFactory::getDAL()->getAllForDiscussion($id));
         }
 
@@ -53,35 +32,72 @@ class DiscussionDALDb implements DiscussionDAL {
         return $discussions;
     }
 
-    public function delete($id) {
+    public function getNumberOfDiscussions() {
         $con = $this->getConnection();
-        $stat = $this->executeStatement($con, 'DELETE discussion WHERE id = ?', function($s) use($id) {
+        $res = $this->extecuteQuery($con, 'SELECT count(id) as cnt FROM discussion');
+
+        while ($result = $res->fetch_object()) {
+            return $result->cnt;
+        }
+
+        $res->close();
+        $con->close();
+        return 0;
+    }
+
+    public function get($id) {
+        $con = $this->getConnection();
+        $stat = $this->executeStatement($con, 'SELECT id, name, FK_originator, creationDate 
+            FROM discussion
+            WHERE id = ?', function($s) use($id) {
             $s->bind_param('i', $id);
         });
 
+        $stat->bind_result($id, $name, $originator, $creationDate);
+
+        while ($stat->fetch()) {
+            return new Discussion($id, $name, $originator, $creationDate, CommentDALFactory::getDAL()->getAllForDiscussion($id));
+        }
+
         $stat->close();
         $con->close();
+        return null;
+    }
+
+    public function delete($id) {
+        $discussion = $this->get($id);
+
+        if ($discussion != null && PrivilegeManager::isAuthenticatedUserOriginator($discussion->getOriginator())) {
+            $con = $this->getConnection();
+            $stat = $this->executeStatement($con, 'DELETE FROM discussion WHERE id = ?', function($s) use($id) {
+                $s->bind_param('i', $id);
+            });
+
+            $stat->close();
+            $con->close();
+        }
     }
 
     public function add($discussion) {
-        $name = $discussion->getName();
-        $originator = $discussion->getOriginator();
-        $creationDate = $discussion->getCreationDate();
+        if (PrivilegeManager::isAuthenticatedUserAllowedToAdd()) {
+            $name = $discussion->getName();
+            $originator = $discussion->getOriginator();
+            $creationDate = $discussion->getCreationDate();
 
-        $con = $this->getConnection();
-        
-        $stat = $this->executeStatement($con, 'INSERT INTO discussion (name, FK_originator, creationDate) VALUES(?,?,?)', 
-                function($s) use($name, $originator, $creationDate) {
-            $s->bind_param('sss', $name, $originator, $creationDate);
-        });
-        
-        $discussionId = $stat->insert_id;
-        $stat->close();
-        $con->close();
-        
-        foreach ($discussion->getComments() as $comment) {
-            $comment->setDiscussionId($discussionId);
-            CommentDALFactory::getDAL()->add($comment);
+            $con = $this->getConnection();
+
+            $stat = $this->executeStatement($con, 'INSERT INTO discussion (name, FK_originator, creationDate) VALUES(?,?,?)', function($s) use($name, $originator, $creationDate) {
+                $s->bind_param('sss', $name, $originator, $creationDate);
+            });
+
+            $discussionId = $stat->insert_id;
+            $stat->close();
+            $con->close();
+
+            foreach ($discussion->getComments() as $comment) {
+                $comment->setDiscussionId($discussionId);
+                CommentDALFactory::getDAL()->add($comment);
+            }
         }
     }
 

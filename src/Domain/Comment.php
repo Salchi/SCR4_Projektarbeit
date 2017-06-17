@@ -8,13 +8,13 @@ class Comment extends Entity{
     private $creationDate;
     private $discussionId;
     
-    public function __construct($id, $discussionId, $originator, $text) {
+    public function __construct($id, $discussionId, $originator, $text, $creationDate) {
         parent::__construct($id);
 
         $this->originator = $originator;
         $this->text = $text;
         $this->discussionId = $discussionId;
-        $this->creationDate = date(Discussion::DATE_FORMAT);
+        $this->creationDate = $creationDate;
     }
     
     public function getDiscussionId(){
