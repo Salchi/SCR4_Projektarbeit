@@ -3,7 +3,15 @@
 <div class="container">
     <h1>Detail - <?php self::htmlOut($model['discussion']->getName()); ?></h1>
     <p>Created by <?php self::htmlOut($model['discussion']->getOriginator()); ?>, on <?php self::htmlOut($model['discussion']->getCreationDate()); ?></p>  
-    <?php self::renderView('partial/commentsList', $model['discussion']->getComments()); ?>
+    <?php 
+    if (sizeof($model['discussion']->getComments()) > 0){
+        self::renderView('partial/information', array('information' => 'Disucssion has '. sizeof($model['discussion']->getComments()) . ' comments.')); 
+    }
+    else{
+        self::renderView('partial/warning', array('warning' => 'Disucssion has no comments yet.')); 
+    }
+    self::renderView('partial/commentsList', $model['discussion']->getComments()); 
+    ?>
 </div>
 
 <script>

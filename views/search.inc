@@ -13,19 +13,15 @@
     <br><br>
     <?php self::endActionForm(); ?>
 
-    <?php if (sizeof($model['result']) > 0): ?>
-        <div class="alert alert-info">
-            <strong>Found <?php echo $model['numberOfComments']; ?> comments.</strong>
-        </div>
-        <?php
+    <?php
+    if (sizeof($model['result']) > 0) {
+        self::renderView('partial/information', array('information' => "Found " . $model['numberOfComments'] . " comments."));
         self::renderView('partial/commentsList', $model['result']);
         self::renderView('partial/pagination', $model['paginationModel']);
-    elseif ($model['result'] !== null):
-        ?>
-        <div class="alert alert-warning">
-            <strong>No comment contains '<?php echo $model['searchString'] ?>'.</strong>
-        </div>
-    <?php endif; ?>
+    } else if ($model['result'] !== null) {
+        self::renderView('partial/warning', array('warning' => "No comment contains '" . $model['searchString'] . "'."));
+    }
+    ?>
 </div>
 
 <?php self::renderView('partial/footer', $model); ?>
