@@ -5,16 +5,16 @@ namespace Domain;
 class Comment extends Entity{
     private $originator;
     private $text;
-    private $creationDate;
+    private $creationDateTime;
     private $discussionId;
     
-    public function __construct($id, $discussionId, $originator, $text, $creationDate) {
+    public function __construct($id, $discussionId, $originator, $text, $creationDateTime) {
         parent::__construct($id);
 
         $this->originator = $originator;
         $this->text = $text;
         $this->discussionId = $discussionId;
-        $this->creationDate = $creationDate;
+        $this->creationDateTime = $creationDateTime;
     }
     
     public function getDiscussionId(){
@@ -29,7 +29,7 @@ class Comment extends Entity{
     public function getText(){
         return $this->text;
     }
-    public function getCreationDate(){
-        return $this->creationDate;
+    public function getCreationDateTime(){
+        return $this->creationDateTime;
     }
 }

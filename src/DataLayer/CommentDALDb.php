@@ -14,17 +14,17 @@ class CommentDALDb extends DbDALBase implements CommentDAL {
     public function getAllForDiscussion($discussionId) {
         $comments = array();
         $con = $this->getConnection();
-        $stat = $this->executeStatement($con, 'SELECT id, text, creationDate, FK_originator 
+        $stat = $this->executeStatement($con, 'SELECT id, text, creationDateTime, FK_originator 
             FROM comment
             WHERE FK_discussion = ?
-            ORDER BY creationDate, id DESC', function($s) use($discussionId) {
+            ORDER BY creationDateTime DESC', function($s) use($discussionId) {
             $s->bind_param('i', $discussionId);
         });
 
-        $stat->bind_result($id, $text, $creationDate, $originator);
+        $stat->bind_result($id, $text, $creationDateTime, $originator);
 
         while ($stat->fetch()) {
-            $comments[] = new Comment($id, $discussionId, $originator, $text, $creationDate);
+            $comments[] = new Comment($id, $discussionId, $originator, $text, $creationDateTime);
         }
 
         $stat->close();
@@ -35,17 +35,17 @@ class CommentDALDb extends DbDALBase implements CommentDAL {
     private function getAllCommentsWith($searchString) {
         $comments = array();
         $con = $this->getConnection();
-        $stat = $this->executeStatement($con, 'SELECT id, text, creationDate, FK_originator, FK_discussion
+        $stat = $this->executeStatement($con, 'SELECT id, text, creationDateTime, FK_originator, FK_discussion
             FROM comment
             WHERE text LIKE CONCAT(\'%\',?,\'%\')
-            ORDER BY creationDate, id DESC', function($s) use($searchString) {
+            ORDER BY creationDateTime DESC', function($s) use($searchString) {
             $s->bind_param('s', $searchString);
         });
 
-        $stat->bind_result($id, $text, $creationDate, $originator, $discussionId);
+        $stat->bind_result($id, $text, $creationDateTime, $originator, $discussionId);
 
         while ($stat->fetch()) {
-            $comments[] = new Comment($id, $discussionId, $originator, $text, $creationDate);
+            $comments[] = new Comment($id, $discussionId, $originator, $text, $creationDateTime);
         }
 
         $stat->close();
@@ -56,18 +56,18 @@ class CommentDALDb extends DbDALBase implements CommentDAL {
     public function getAllCommentsWithPaginationWith($searchString, $offset, $numOfElements) {
         $comments = array();
         $con = $this->getConnection();
-        $stat = $this->executeStatement($con, 'SELECT id, text, creationDate, FK_originator, FK_discussion
+        $stat = $this->executeStatement($con, 'SELECT id, text, creationDateTime, FK_originator, FK_discussion
             FROM comment
             WHERE text LIKE CONCAT(\'%\',?,\'%\')
-            ORDER BY creationDate, id DESC
+            ORDER BY creationDateTime DESC
             LIMIT ?,?', function($s) use($searchString, $offset, $numOfElements) {
             $s->bind_param('sii', $searchString, $offset, $numOfElements);
         });
 
-        $stat->bind_result($id, $text, $creationDate, $originator, $discussionId);
+        $stat->bind_result($id, $text, $creationDateTime, $originator, $discussionId);
 
         while ($stat->fetch()) {
-            $comments[] = new Comment($id, $discussionId, $originator, $text, $creationDate);
+            $comments[] = new Comment($id, $discussionId, $originator, $text, $creationDateTime);
         }
 
         $stat->close();
@@ -101,17 +101,17 @@ class CommentDALDb extends DbDALBase implements CommentDAL {
 
     public function getNewestComment() {
         $con = $this->getConnection();
-        $stat = $this->executeStatement($con, 'SELECT id, text, creationDate, FK_originator, FK_discussion
+        $stat = $this->executeStatement($con, 'SELECT id, text, creationDateTime, FK_originator, FK_discussion
             FROM comment
-            ORDER BY creationDate, id DESC
+            ORDER BY creationDateTime DESC
             LIMIT 1', function($s) {
             
         });
 
-        $stat->bind_result($id, $text, $creationDate, $originator, $discussionId);
+        $stat->bind_result($id, $text, $creationDateTime, $originator, $discussionId);
 
         while ($stat->fetch()) {
-            return new Comment($id, $discussionId, $originator, $text, $creationDate);
+            return new Comment($id, $discussionId, $originator, $text, $creationDateTime);
         }
 
         $stat->close();
@@ -121,16 +121,16 @@ class CommentDALDb extends DbDALBase implements CommentDAL {
 
     public function get($id) {
         $con = $this->getConnection();
-        $stat = $this->executeStatement($con, 'SELECT id, text, creationDate, FK_originator, FK_discussion
+        $stat = $this->executeStatement($con, 'SELECT id, text, creationDateTime, FK_originator, FK_discussion
             FROM comment
             WHERE id = ?', function($s) use($id) {
             $s->bind_param('i', $id);
         });
 
-        $stat->bind_result($id, $text, $creationDate, $originator, $discussionId);
+        $stat->bind_result($id, $text, $creationDateTime, $originator, $discussionId);
 
         while ($stat->fetch()) {
-            return new Comment($id, $discussionId, $originator, $text, $creationDate);
+            return new Comment($id, $discussionId, $originator, $text, $creationDateTime);
         }
 
         $stat->close();
@@ -156,14 +156,14 @@ class CommentDALDb extends DbDALBase implements CommentDAL {
         if (PrivilegeManager::isAuthenticatedUserAllowedToAdd()) {
             $text = $comment->getText();
             $originator = $comment->getOriginator();
-            $creationDate = $comment->getCreationDate();
+            $creationDateTime = $comment->getCreationDateTime();
             $discussionId = $comment->getDiscussionId();
 
             $con = $this->getConnection();
 
-            $stat = $this->executeStatement($con, 'INSERT INTO comment (text, creationDate, FK_originator, FK_discussion) VALUES(?,?,?,?)', 
-                    function($s) use($text, $creationDate, $originator, $discussionId) {
-                $s->bind_param('sssi', $text, $creationDate, $originator, $discussionId);
+            $stat = $this->executeStatement($con, 'INSERT INTO comment (text, creationDateTime, FK_originator, FK_discussion) VALUES(?,?,?,?)', 
+                    function($s) use($text, $creationDateTime, $originator, $discussionId) {
+                $s->bind_param('sssi', $text, $creationDateTime, $originator, $discussionId);
             });
 
             $stat->close();

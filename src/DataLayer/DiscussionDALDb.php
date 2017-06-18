@@ -16,7 +16,7 @@ class DiscussionDALDb extends DbDALBase implements DiscussionDAL {
         $con = $this->getConnection();
         $stat = $this->executeStatement($con, 'SELECT id, name, FK_originator, creationDate 
             FROM discussion
-            ORDER BY creationDate, id DESC
+            ORDER BY creationDate DESC
             LIMIT ?,?', function($s) use($offset, $numOfElements) {
             $s->bind_param('ii', $offset, $numOfElements);
         });

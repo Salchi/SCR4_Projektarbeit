@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-xs-10">
                     <h4 class="list-group-item-heading"><?php self::htmlOut($comment->getText()); ?></h4>
-                    <p class="list-group-item-text">Created by <?php self::htmlOut($comment->getOriginator()); ?>, on <?php self::htmlOut($comment->getCreationDate()); ?></p>  
+                    <p class="list-group-item-text">Created by <?php self::htmlOut($comment->getOriginator()); ?>, at <?php self::htmlOut($comment->getCreationDateTime()); ?></p>  
                 </div>
                 <?php if ($model['currUser'] != null && $model['currUser']->getUsername() == $comment->getOriginator()): ?>
                     <div class="col-xs-2">

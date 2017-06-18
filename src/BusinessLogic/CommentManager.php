@@ -33,7 +33,7 @@ class CommentManager {
     
     public static function addComment($discussionId, $text){
         if (PrivilegeManager::isAuthenticatedUserAllowedToAdd()){
-            CommentDALFactory::getDAL()->add(new Comment(-1, $discussionId, AuthentificationManager::getAuthenticatedUser()->getUsername(), $text, date('Y-m-d')));
+            CommentDALFactory::getDAL()->add(new Comment(-1, $discussionId, AuthentificationManager::getAuthenticatedUser()->getUsername(), $text, date('Y-m-d H:i:s')));
         }
     }
 }
