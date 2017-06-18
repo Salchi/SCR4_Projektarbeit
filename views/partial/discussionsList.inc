@@ -4,10 +4,13 @@
         <a href="<?php self::htmlOut(self::getUrl('Detail', 'Discussion', array('id' => $discussion->getId()))); ?>" class="list-group-item container">
             <div class="row">
                 <div class="col-xs-10">
-                    <h4 class="list-group-item-heading">
-                        <?php
-                        self::htmlOut($discussion->getName());
-                        ?> <span class="badge"><?php echo sizeof($discussion->getComments()); ?></span>
+                    <h4 class="list-group-item-heading v-center">
+                        <span class="badge"><?php echo sizeof($discussion->getComments()); ?></span>
+                        <span>
+                            <?php
+                            self::htmlOut($discussion->getName());
+                            ?> 
+                        </span>
                     </h4>
                     <p class="list-group-item-text">Created by <?php self::htmlOut($discussion->getOriginator()); ?>, on <?php self::htmlOut($discussion->getCreationDate()); ?></p>  
                     <?php if (sizeof($discussion->getComments()) > 0): ?>

@@ -3,7 +3,7 @@ body{
     padding-bottom: 60px;
 }
 .list-group .list-group-item .list-group-item-heading .badge{
-    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .footer{
