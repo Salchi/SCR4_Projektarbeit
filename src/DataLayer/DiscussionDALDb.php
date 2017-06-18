@@ -14,14 +14,17 @@ class DiscussionDALDb extends DbDALBase implements DiscussionDAL {
     public function getWithPagination($offset, $numOfElements) {
         $discussions = array();
         $con = $this->getConnection();
-        $stat = $this->executeStatement($con, 'SELECT id, name, FK_originator, creationDate 
-            FROM discussion
-            ORDER BY creationDate DESC
+        $stat = $this->executeStatement($con, '
+            SELECT id, name, FK_originator, creationDate, (
+                SELECT MAX(creationDateTime) FROM comment WHERE FK_discussion = d.id
+            ) as newestCommentDateTime
+            FROM discussion d
+            ORDER BY newestCommentDateTime DESC, creationDate DESC
             LIMIT ?,?', function($s) use($offset, $numOfElements) {
             $s->bind_param('ii', $offset, $numOfElements);
         });
 
-        $stat->bind_result($id, $name, $originator, $creationDate);
+        $stat->bind_result($id, $name, $originator, $creationDate, $newestCommentDateTime);
 
         while ($stat->fetch()) {
             $discussions[] = new Discussion($id, $name, $originator, $creationDate, CommentDALFactory::getDAL()->getAllForDiscussion($id));
