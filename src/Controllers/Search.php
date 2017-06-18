@@ -60,7 +60,7 @@ class Search extends \MVC\Controller {
         ));
     }
 
-    public function POST_Search() {
+    public function GET_FetchResult() {
         $searchString = $this->getParam(self::PARAM_SEARCH_STRING);
         $errors = $this->checkParam($searchString);
 
