@@ -18,7 +18,7 @@
                                 'red' => $model['redirectUrl']
                             ),
                             'cssClass' => 'delete-form pull-right',
-                            'onSubmit' => 'return requestConfirmation(\'Are you sure?\')'
+                            'onSubmit' => 'return submitOnConfirmation(this, $(\'#confirmModal\'));'
                         ));
                         ?>
                     </div>

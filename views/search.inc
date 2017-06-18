@@ -28,4 +28,6 @@
     ?>
 </div>
 
+<?php self::renderView('partial/confirmModal', array()); ?>
+
 <?php self::renderView('partial/footer', $model); ?>

@@ -36,6 +36,8 @@
     ?>
 </div>
 
+<?php self::renderView('partial/confirmModal', array()); ?>
+
 <script>
     $(function () {
         function scroll(hash) {
