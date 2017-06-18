@@ -3,7 +3,7 @@
 <div class="container">
     <h1>Search</h1>
 
-    <?php self::beginActionForm('Search', 'Search', 'post'); ?>
+    <?php self::beginActionForm('FetchResult', 'Search', 'get'); ?>
     <div class="input-group">
         <input type="text" placeholder="search string" class="form-control" name="searchString" value="<?php self::htmlOut($model['searchString']); ?>" required>
         <div class="input-group-btn">
