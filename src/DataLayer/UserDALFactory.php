@@ -2,6 +2,8 @@
 
 namespace DataLayer;
 
+require 'DbConfiguration.php';
+
 class UserDALFactory {
 
     private function __construct() {
@@ -9,7 +11,7 @@ class UserDALFactory {
     }
 
     public static function getDAL() {
-        return new UserDALDb('localhost', 'root', '', 'projektarbeit');
+        return new UserDALDb(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
     }
 
 }
