@@ -23,7 +23,8 @@
     </div>
     <?php
     if (sizeof($model['discussion']->getComments()) > 0) {
-        self::renderView('partial/information', array('information' => 'Disucssion has ' . sizeof($model['discussion']->getComments()) . ' comments.'));
+        $numOfComments = sizeof($model['discussion']->getComments());
+        self::renderView('partial/information', array('information' => "Disucssion has $numOfComments comment" . ($numOfComments > 1 ? 's' : '') . '.'));
     } else {
         self::renderView('partial/warning', array('warning' => 'Disucssion has no comments yet.'));
     }

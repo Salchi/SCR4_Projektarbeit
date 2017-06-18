@@ -15,7 +15,7 @@
 
     <?php
     if (sizeof($model['result']) > 0) {
-        self::renderView('partial/information', array('information' => "Found " . $model['numberOfComments'] . " comments."));
+        self::renderView('partial/information', array('information' => "Found " . $model['numberOfComments'] . " comment" . ($model['numberOfComments'] > 1 ? "s" : "")."."));
         self::renderView('partial/commentsList', array(
             'currUser' => $model['currUser'],
             'redirectUrl' => self::getUrl('Search', 'Search', array('searchString' => $model['searchString'])),
