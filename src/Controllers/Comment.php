@@ -31,8 +31,6 @@ class Comment extends \MVC\Controller {
     public function GET_Add() {
         if ($this->hasParam(self::PARAM_DISCUSSION_ID) && PrivilegeManager::isAuthenticatedUserAllowedToAdd()) {
             return $this->renderView('addComment', array(
-                        'newestComment' => CommentManager::getNewestComment(),
-                        'currUser' => AuthentificationManager::getAuthenticatedUser(),
                         'text' => '',
                         'discussionId' => $this->getParam(self::PARAM_DISCUSSION_ID),
                         'redirectUrl' => $this->hasParam(self::PARAM_REDIRECT) ? $this->getParam(self::PARAM_REDIRECT) : null
@@ -61,8 +59,6 @@ class Comment extends \MVC\Controller {
 
             if (sizeof($errors) > 0) {
                 return $this->renderView('addComment', array(
-                            'newestComment' => CommentManager::getNewestComment(),
-                            'currUser' => AuthentificationManager::getAuthenticatedUser(),
                             'text' => '',
                             'discussionId' => $discussionId,
                             'redirectUrl' => $this->hasParam(self::PARAM_REDIRECT) ? $this->getParam(self::PARAM_REDIRECT) : null,

@@ -12,7 +12,17 @@ class Controller {
         return isset($_REQUEST[$id]) ? $_REQUEST[$id] : $defaultValue;
     }
 
+    private final function addToModel($key, $value, $model){
+        if (!array_key_exists($key, $model)) {
+            $model[$key] = $value;
+        }
+        
+        return $model;
+    }
+    
     public final function renderView($view, $model = array()) {
+        $model = $this->addToModel('currUser', \BusinessLogic\AuthentificationManager::getAuthenticatedUser(), $model);
+        $model = $this->addToModel('newestComment', \BusinessLogic\CommentManager::getNewestComment(), $model);
         ViewRenderer::renderView($view, $model);
     }
 
