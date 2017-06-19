@@ -2,7 +2,7 @@
 <div class="list-group" id="discussions-list">
     <?php foreach ($model['discussions'] as $discussion): ?>
         <a href="<?php self::htmlOut(self::getUrl('Detail', 'Discussion', array('id' => $discussion->getId()))); ?>" class="list-group-item container">
-            <div class="row">
+            <div class="row v-center">
                 <div class="col-xs-10">
                     <h4 class="list-group-item-heading v-center">
                         <span class="badge"><?php echo sizeof($discussion->getComments()); ?></span>
