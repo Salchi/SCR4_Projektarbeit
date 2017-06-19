@@ -19,7 +19,10 @@ class DiscussionDALDb extends DbDALBase implements DiscussionDAL {
                 SELECT MAX(creationDateTime) FROM comment WHERE FK_discussion = d.id
             ) as newestCommentDateTime
             FROM discussion d
-            ORDER BY newestCommentDateTime DESC, creationDate DESC
+            ORDER BY CASE 
+              WHEN newestCommentDateTime IS NULL THEN creationDate
+              ELSE newestCommentDateTime    
+            END DESC
             LIMIT ?,?', function($s) use($offset, $numOfElements) {
             $s->bind_param('ii', $offset, $numOfElements);
         });
