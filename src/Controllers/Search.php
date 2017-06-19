@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use BusinessLogic\CommentManager;
-use BusinessLogic\AuthentificationManager;
 
 class Search extends \MVC\Controller {
 

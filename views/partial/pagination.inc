@@ -17,7 +17,8 @@
             $pageIndex = $model['currentPageNumber'] + ($i - $model['pivot']);
         }
         ?>
-        <li class="<?php echo $pageIndex == $model['currentPageNumber'] ? 'active' : ''; ?>"><a href="<?php self::htmlOut(self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => $pageIndex))) ?>"><?php echo $pageIndex ?></a></li>
+        <li class="<?php echo $pageIndex == $model['currentPageNumber'] ? 'active' : ''; ?>">
+            <a href="<?php self::htmlOut(self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => $pageIndex))) ?>"><?php echo $pageIndex ?></a></li>
     <?php }
 
     if ($model['currentPageNumber'] >= $model['totalPages']):?>

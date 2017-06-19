@@ -4,7 +4,6 @@ namespace Controllers;
 
 use BusinessLogic\AuthentificationManager;
 use BusinessLogic\RegistrationManager;
-use BusinessLogic\CommentManager;
 
 class User extends \MVC\Controller {
 

@@ -12,9 +12,11 @@
                             ?> 
                         </span>
                     </h4>
-                    <p class="list-group-item-text">Created by <?php self::htmlOut($discussion->getOriginator()); ?>, on <?php self::htmlOut($discussion->getCreationDate()); ?></p>  
+                    <p class="list-group-item-text">Created by <?php self::htmlOut($discussion->getOriginator()); ?>, on 
+                        <?php self::htmlOut($discussion->getCreationDate()); ?></p>  
                     <?php if (sizeof($discussion->getComments()) > 0): ?>
-                        <p class="list-group-item-text">Last comment by <?php self::htmlOut($discussion->getComments()[0]->getOriginator()); ?>, at <?php self::htmlOut($discussion->getComments()[0]->getCreationDateTime()); ?></p>
+                        <p class="list-group-item-text">Last comment by <?php self::htmlOut($discussion->getComments()[0]->getOriginator()); ?>, at 
+                            <?php self::htmlOut($discussion->getComments()[0]->getCreationDateTime()); ?></p>
                     <?php endif; ?>
                 </div>
                 <?php if ($model['currUser'] != null && $model['currUser']->getUsername() == $discussion->getOriginator()): ?>
