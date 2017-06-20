@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use BusinessLogic\DiscussionManager;
-use BusinessLogic\CommentManager;
 use BusinessLogic\AuthentificationManager;
 use BusinessLogic\PrivilegeManager;
 

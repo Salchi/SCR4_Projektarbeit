@@ -1,9 +1,9 @@
 <script src="js/scripts.js"></script>
 <div class="list-group comments-list">
     <?php foreach ($model['comments'] as $comment): ?>
-        <a href="<?php echo self::getUrl('Detail', 'Discussion', array('id' => $comment->getDiscussionId())) . '#' . $comment->getId(); ?>" 
-           class="list-group-item" id="<?php echo $comment->getId(); ?>">
-            <div class="row">
+        <a href="<?php self::htmlOut(self::getUrl('Detail', 'Discussion', array('id' => $comment->getDiscussionId())) . '#' . $comment->getId()); ?>" 
+           class="list-group-item" id="<?php self::htmlOut($comment->getId()); ?>">
+            <div class="row v-center">
                 <div class="col-xs-10">
                     <h4 class="list-group-item-heading"><?php self::htmlOut($comment->getText()); ?></h4>
                     <p class="list-group-item-text">Created by <?php self::htmlOut($comment->getOriginator()); ?>, at 

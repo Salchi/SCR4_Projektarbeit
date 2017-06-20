@@ -17,7 +17,7 @@ class User extends \MVC\Controller {
         ));
     }
 
-    public function GET_Logout() {
+    public function POST_Logout() {
         AuthentificationManager::signOut();
         return $this->redirect('Index', 'Discussion');
     }

@@ -24,7 +24,11 @@
                 <?php if($model['currUser'] == null): ?>
                 <li><?php self::actionLink('Login', "Login", "User"); ?></li>
                 <?php else: ?>
-                <li><?php self::actionLink('Logout', "Logout", "User"); ?></li>
+                <li>
+                <?php self::beginActionForm('Logout', 'User', 'post', null, 'navbar-form'); ?>
+                <button class="btn btn-link">Logout</button>
+                <?php self::endActionForm(); ?>
+                </li>
                 <?php endif; ?>
             </ul>
         </div>

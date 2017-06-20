@@ -3,8 +3,8 @@
         <li class="disabled"><a href="#">First</a></li>
         <li class="disabled"><a href="#">Prev</a></li>
     <?php else: ?>
-        <li><a href="<?php echo self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => 1)) ?>">First</a></li>
-        <li><a href="<?php echo self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => $model['currentPageNumber'] - 1)) ?>">Prev</a></li>
+        <li><a href="<?php self::htmlOut(self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => 1))) ?>">First</a></li>
+        <li><a href="<?php self::htmlOut(self::addParamsToUrl($model['baseUri'], array($model['paramNamePageNumber'] => $model['currentPageNumber'] - 1))) ?>">Prev</a></li>
     <?php endif; ?>
 
     <?php
